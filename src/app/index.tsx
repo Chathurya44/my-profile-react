@@ -1,98 +1,183 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  SafeAreaView,
+} from 'react-native';
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
-
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
+export default function ProfileScreen() {
   return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+    <SafeAreaView style={styles.container}>
 
-export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
+      {/* Header */}
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>My Profile</Text>
+      </View>
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
+      {/* Profile Content */}
+      <View style={styles.content}>
 
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
+        {/* Profile Picture */}
+        <View style={styles.imageContainer}>
+          <Image
+            source={require('../../assets/images/profile.jpeg')}
+            style={styles.profileImage}
           />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
+        </View>
 
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+        {/* Horizontal Line */}
+        <View style={styles.line} />
+
+        {/* Name */}
+        <Text style={styles.label}>Name</Text>
+        <Text style={styles.value}>Chathurya</Text>
+
+        {/* Email */}
+        <Text style={styles.label}>Email</Text>
+
+        <View style={styles.emailRow}>
+          <Text style={styles.emailIcon}>✉</Text>
+          <Text style={styles.value}>
+            smcn2003@gmail.com
+          </Text>
+        </View>
+
+        {/* Points */}
+        <Text style={styles.label}>Points</Text>
+
+        <View style={styles.pointsRow}>
+          <Text style={styles.star}>★</Text>
+          <Text style={styles.value}>0</Text>
+        </View>
+
+      </View>
+
+      {/* Plus Button */}
+      <TouchableOpacity style={styles.plusButton}>
+        <Text style={styles.plusText}>+</Text>
+      </TouchableOpacity>
+
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#f5f5f5',
+  },
+
+  header: {
+    height: 60,
+    backgroundColor: '#000000',
     justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#dddddd',
+  },
+
+  headerTitle: {
+    color: '#ffffff',
+    fontSize: 17,
+    fontWeight: 'bold',
+  },
+
+  content: {
+    flex: 1,
+    paddingHorizontal: 25,
+    paddingTop: 20,
+  },
+
+  imageContainer: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+    borderWidth: 2,
+    borderColor: '#ffb6c1',
+    padding: 5,
+  },
+
+  profileImage: {
+    width: 108,
+    height: 108,
+    borderRadius: 54,
+  },
+
+  line: {
+    height: 2,
+    backgroundColor: '#333333',
+    marginTop: 20,
+    marginBottom: 12,
+  },
+
+  label: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: '#222222',
+    marginTop: 12,
+  },
+
+  value: {
+    fontSize: 14,
+    color: '#444444',
+    marginTop: 5,
+  },
+
+  emailRow: {
     flexDirection: 'row',
-  },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
     alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
+    marginTop: 5,
   },
-  heroSection: {
+
+  emailIcon: {
+    fontSize: 16,
+    color: '#000000',
+    marginRight: 8,
+  },
+
+  pointsRow: {
+    flexDirection: 'row',
     alignItems: 'center',
+    marginTop: 5,
+  },
+
+  star: {
+    fontSize: 18,
+    color: '#000000',
+    marginRight: 10,
+  },
+
+  plusButton: {
+    position: 'absolute',
+    right: 20,
+    bottom: 20,
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    backgroundColor: '#000000',
     justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
+    alignItems: 'center',
+    elevation: 6,
+
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
   },
-  title: {
-    textAlign: 'center',
-  },
-  code: {
-    textTransform: 'uppercase',
-  },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+
+  plusText: {
+    color: '#ffffff',
+    fontSize: 28,
+    fontWeight: '300',
   },
 });
